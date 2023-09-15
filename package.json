@@ -1,0 +1,14 @@
+{
+  "name": "aion",
+  "version": "0.0.1",
+  "description": "Time manager",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ed",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^10.4.0"
+  }
+}
