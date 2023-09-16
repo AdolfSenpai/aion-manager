@@ -1,14 +1,24 @@
 {
     "compilerOptions": {
+        "declaration": false,
         "outDir": "./dist/",
         "sourceMap": true,
         "noImplicitAny": true,
         "module": "es6",
         "target": "es5",
         "allowJs": true,
+        "jsx": "react-jsx",
+        "jsxImportSource": "preact",
         "moduleResolution": "node",
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        "typeRoots": ["./node_modules/@types"]
-    }
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "typeRoots": [
+            "node_modules/@types",
+        ],
+    },
+    "include": [
+      "src"
+    ]
 }
