@@ -1,7 +1,8 @@
 const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-    entry: './src/index.ts',
+    entry: [ './src/index.tsx', './src/index.scss' ],
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: 'bundle.js',
@@ -12,6 +13,12 @@ module.exports = {
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+        alias: {
+            "react": "@preact/compat",
+            "react-dom/test-utils": "preact/test-utils",
+            "react-dom": "@preact/compat",
+            "react/jsx-runtime": "preact/jsx-runtime",
+        }
     },
     module: {
         rules: [
@@ -19,6 +26,27 @@ module.exports = {
             { test: /\.tsx?$/, loader: "ts-loader", exclude: /node_modules/ },
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             { test: /\.js$/, loader: "source-map-loader" },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                  "style-loader",
+                  "css-loader",
+                  {
+                    loader: "sass-loader",
+                    options: {
+                      // Prefer `dart-sass`
+                      implementation: require("sass"),
+                    },
+                  },
+                ],
+              },
         ],
     },
+    plugins: [
+      new HtmlWebpackPlugin({  // Also generate a test.html
+        filename: 'index.html',
+        template: 'src/index.html'
+      })
+    ]
+    
 };

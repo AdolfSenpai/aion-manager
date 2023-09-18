@@ -28,11 +28,19 @@
     "lodash": "^4.17.21",
     "preact": "^10.17.1",
     "preact-router": "^4.1.2",
+    "react": "npm:@preact/compat@^17.1.2",
+    "react-dom": "npm:@preact/compat@^17.1.2",
     "source-map-loader": "^4.0.1",
     "ts-loader": "^9.4.4"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.198",
+    "@types/node-sass": "^4.11.4",
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.3",
+    "node-sass": "^9.0.0",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
     "typescript": "^5.2.2",
     "webpack-cli": "^5.1.4"
   }
