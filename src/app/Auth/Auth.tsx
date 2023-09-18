@@ -2,23 +2,43 @@ import { GoogleAuthProvider, User, getAuth, signInWithEmailAndPassword, signInWi
 import { useState } from "preact/hooks";
 import { StateUpdater } from "preact/hooks";
 
-export default function Auth(props: {setUser: StateUpdater<User>}) {
+export interface AuthProps {
+    setUser: StateUpdater<User>;
+    setRegistration: StateUpdater<boolean>;
+}
+
+interface Errors {
+    backend?: string;
+}
+
+export default function Auth(props: AuthProps) {
 
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
-    const [error, setError] = useState<any>();
+    const [errors, setErrors] = useState<Errors>();
 
     const loginWithGoogle = () => {
 
         signInWithPopup(getAuth(), new GoogleAuthProvider())
-            .then(result => props.setUser(result.user));
+            .then(result => {
+                props.setUser(result.user);
+                setEmail(null);
+                setPassword(null);
+                setErrors(null);
+            })
+            .catch(error => setErrors({...errors, backend: error.message}));
     }
 
     const login = () => {
 
         signInWithEmailAndPassword(getAuth(), email, password)
-            .then(result => props.setUser(result.user))
-            .catch(setError);
+            .then(result => {
+                props.setUser(result.user);
+                setEmail(null);
+                setPassword(null);
+                setErrors(null);
+            })
+            .catch(setErrors);
     }
 
     return (
@@ -53,28 +73,42 @@ export default function Auth(props: {setUser: StateUpdater<User>}) {
                 </p>
             </div>
 
-            { !!error && 
+            { !!errors.backend && 
                 <div class="message is-danger">
                     <div class="message-head">
                         <p>Error</p>
                     </div>
                     <div class="message-body">
-                        <p>{error.message}</p>
+                        <p>{errors.backend}</p>
                     </div>
                 </div> 
             }
 
-            <div class="field">
-                <p class="control">
-                    <button
-                        class="button is-primary"
-                        onClick={login}
-                    >
-                        Sign in
-                    </button>
-                </p>
+            <div class="columns is-vcentered">
+                <div class="column">
+                    <div class="buttons">
+                        <button
+                            class="button is-primary"
+                            onClick={login}
+                        >
+                            Sign in
+                        </button>
+                        <button class="button" onClick={loginWithGoogle}>
+                            <span class="icon">
+                                <i class="fa-brands fa-google"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="column is-narrow">
+                    <p>
+                        Don't have an account?&nbsp;
+                        <a onClick={() => props.setRegistration(true)}>
+                            Sign up.
+                        </a>
+                    </p>
+                </div>
             </div>
-            <a onClick={loginWithGoogle}>Or sign up with Google</a>
         </div>
     );
 }

@@ -2,6 +2,7 @@ import { initializeApp } from "@firebase/app";
 import { GoogleAuthProvider, User, getAuth, signInWithPopup } from "@firebase/auth";
 import { useState } from "preact/hooks";
 import Auth from "./Auth/Auth";
+import Registration from "./Auth/Registration";
 
 const firebaseConfig = {
     apiKey: "AIzaSyB6gLCAd3vsb-QYSAFhh_6BjjnruAxlJjI",
@@ -17,6 +18,7 @@ export default function App() {
     initializeApp(firebaseConfig);
     const [user, setUser] = useState<User>(null);
     const [loading, setLoading] = useState(true);
+    const [registration, setRegistration] = useState(false);
 
     getAuth().onAuthStateChanged(user => { setUser(user), setLoading(false) });
 
@@ -27,6 +29,8 @@ export default function App() {
 
     return (
         <div class="section">
+            {/* TODO: nav-bar */}
+            {/* TODO: home-page */}
             {
                 loading
                 && <div class="loader"></div>
@@ -42,9 +46,14 @@ export default function App() {
             <div class={"modal" + (!loading && !user ? " is-active is-clipped" : "")}>
                 <div class="modal-background"></div>
                 <div class="modal-content">
-                    <Auth setUser={setUser}/>
+                    { 
+                        registration
+                        ? <Registration setUser={setUser} setRegistration={setRegistration}/>
+                        : <Auth setUser={setUser} setRegistration={setRegistration}/>
+                    }
                 </div>
             </div>
+            {/* TODO: registration */}
         </div>
     );
 }
