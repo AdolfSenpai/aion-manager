@@ -1,10 +1,11 @@
 import { GoogleAuthProvider, User, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup } from "@firebase/auth";
 import { useState } from "preact/hooks";
 import { StateUpdater } from "preact/hooks";
+import { AuthState } from "../Navbar/Navbar";
 
 export interface RegistrationProps {
     setUser: StateUpdater<User>;
-    setRegistration: StateUpdater<boolean>;
+    setAuthState: StateUpdater<AuthState>;
 }
 
 interface Errors {
@@ -94,7 +95,7 @@ export default function Registration(props: RegistrationProps) {
                 <label class="label">Password</label>
                 <p class="control has-icons-left">
                     <input
-                        class={"input" + (errors.password ? " is-danger" : "")}
+                        class={"input" + (errors?.password ? " is-danger" : "")}
                         placeholder="********"
                         type="password"
                         onChange={(e) => handlePasswordChange(e.currentTarget.value)}
@@ -108,7 +109,7 @@ export default function Registration(props: RegistrationProps) {
             <div class="field">
                 <p class="control has-icons-left">
                     <input
-                        class={"input" + (errors.password ? " is-danger" : "")}
+                        class={"input" + (errors?.password ? " is-danger" : "")}
                         placeholder="********"
                         type="password"
                         onChange={(e) => handlePasswordConfirmationChange(e.currentTarget.value)}
@@ -117,10 +118,10 @@ export default function Registration(props: RegistrationProps) {
                         <i class="fas fa-lock"></i>
                     </span>
                 </p>
-                { errors.password && <p class="help is-danger">Passwords don't match</p> }
+                { errors?.password && <p class="help is-danger">{errors.password}</p> }
             </div>
 
-            { !!errors.backend && 
+            { !!errors?.backend && 
                 <div class="message is-danger">
                     <div class="message-head">
                         <p>Error</p>
@@ -144,7 +145,7 @@ export default function Registration(props: RegistrationProps) {
                 <div class="column is-narrow">
                     <p>
                         Already have an account?&nbsp;
-                        <a onClick={() => props.setRegistration(false)}>
+                        <a onClick={() => props.setAuthState("signingIn")}>
                             Sign in.
                         </a>
                     </p>

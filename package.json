@@ -30,13 +30,16 @@
     "preact-router": "^4.1.2",
     "react": "npm:@preact/compat@^17.1.2",
     "react-dom": "npm:@preact/compat@^17.1.2",
+    "react-router": "^6.16.0",
     "source-map-loader": "^4.0.1",
     "ts-loader": "^9.4.4"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.198",
     "@types/node-sass": "^4.11.4",
+    "@types/react-router": "^5.1.20",
     "css-loader": "^6.8.1",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.3",
     "node-sass": "^9.0.0",
     "sass-loader": "^13.3.2",

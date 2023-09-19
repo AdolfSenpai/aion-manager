@@ -12,7 +12,7 @@ module.exports = {
     devtool: 'inline-source-map',
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+        extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js", ".png"],
         alias: {
             "react": "@preact/compat",
             "react-dom/test-utils": "preact/test-utils",
@@ -27,19 +27,26 @@ module.exports = {
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             { test: /\.js$/, loader: "source-map-loader" },
             {
-                test: /\.s[ac]ss$/i,
-                use: [
-                  "style-loader",
-                  "css-loader",
-                  {
-                    loader: "sass-loader",
-                    options: {
-                      // Prefer `dart-sass`
-                      implementation: require("sass"),
-                    },
+              test: /\.s[ac]ss$/i,
+              use: [
+                "style-loader",
+                "css-loader",
+                {
+                  loader: "sass-loader",
+                  options: {
+                    // Prefer `dart-sass`
+                    implementation: require("sass"),
                   },
-                ],
-              },
+                },
+              ],
+            },
+            {
+              test: /\.(jpe?g|png|gif|svg)$/i, 
+              loader: 'file-loader',
+              options: {
+                name: '/assets/images/[name].[ext]'
+              }
+            }
         ],
     },
     plugins: [

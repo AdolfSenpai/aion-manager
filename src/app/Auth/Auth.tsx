@@ -1,10 +1,11 @@
 import { GoogleAuthProvider, User, getAuth, signInWithEmailAndPassword, signInWithPopup } from "@firebase/auth";
 import { useState } from "preact/hooks";
 import { StateUpdater } from "preact/hooks";
+import { AuthState } from "../Navbar/Navbar";
 
 export interface AuthProps {
     setUser: StateUpdater<User>;
-    setRegistration: StateUpdater<boolean>;
+    setAuthState: StateUpdater<AuthState>;
 }
 
 interface Errors {
@@ -73,7 +74,7 @@ export default function Auth(props: AuthProps) {
                 </p>
             </div>
 
-            { !!errors.backend && 
+            { !!errors?.backend && 
                 <div class="message is-danger">
                     <div class="message-head">
                         <p>Error</p>
@@ -103,7 +104,7 @@ export default function Auth(props: AuthProps) {
                 <div class="column is-narrow">
                     <p>
                         Don't have an account?&nbsp;
-                        <a onClick={() => props.setRegistration(true)}>
+                        <a onClick={() => props.setAuthState("signingUp")}>
                             Sign up.
                         </a>
                     </p>

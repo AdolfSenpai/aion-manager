@@ -1,8 +1,7 @@
 import { initializeApp } from "@firebase/app";
-import { GoogleAuthProvider, User, getAuth, signInWithPopup } from "@firebase/auth";
-import { useState } from "preact/hooks";
-import Auth from "./Auth/Auth";
-import Registration from "./Auth/Registration";
+import Navbar from "./Navbar/Navbar";
+import Router, { useRouter } from "preact-router";
+import { useRoutes } from "react-router";
 
 const firebaseConfig = {
     apiKey: "AIzaSyB6gLCAd3vsb-QYSAFhh_6BjjnruAxlJjI",
@@ -16,44 +15,31 @@ const firebaseConfig = {
 export default function App() {
       
     initializeApp(firebaseConfig);
-    const [user, setUser] = useState<User>(null);
-    const [loading, setLoading] = useState(true);
-    const [registration, setRegistration] = useState(false);
-
-    getAuth().onAuthStateChanged(user => { setUser(user), setLoading(false) });
-
-    const signOut = () => {
-        getAuth().signOut()
-            .then(() => setUser(null));
-    } 
+    
+    useRoutes([
+        {
+            path: "/",
+            element: TestComponent,
+        },
+        {
+            path: "/test",
+            element: TestComponent2,
+        },
+    ]);
 
     return (
         <div class="section">
-            {/* TODO: nav-bar */}
-            {/* TODO: home-page */}
-            {
-                loading
-                && <div class="loader"></div>
-                || user
-                && (
-                    <div>
-                        { user.displayName }
-                        <button onClick={signOut}>Sign out</button>
-                    </div>
-                )
-            }
-
-            <div class={"modal" + (!loading && !user ? " is-active is-clipped" : "")}>
-                <div class="modal-background"></div>
-                <div class="modal-content">
-                    { 
-                        registration
-                        ? <Registration setUser={setUser} setRegistration={setRegistration}/>
-                        : <Auth setUser={setUser} setRegistration={setRegistration}/>
-                    }
-                </div>
-            </div>
-            {/* TODO: registration */}
+            <Navbar />
         </div>
     );
+}
+
+const TestComponent = ({...props}) => {
+
+    return(<div>/ <a href="/test">To test</a></div>);
+}
+
+const TestComponent2 = ({...props}) => {
+
+    return(<div>/TEST <a href="/">Back</a></div>);
 }
