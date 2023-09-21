@@ -1,7 +1,6 @@
 import { initializeApp } from "@firebase/app";
 import Navbar from "./Navbar/Navbar";
-import Router, { useRouter } from "preact-router";
-import { useRoutes } from "react-router";
+import Router from "preact-router";
 
 const firebaseConfig = {
     apiKey: "AIzaSyB6gLCAd3vsb-QYSAFhh_6BjjnruAxlJjI",
@@ -15,21 +14,14 @@ const firebaseConfig = {
 export default function App() {
       
     initializeApp(firebaseConfig);
-    
-    useRoutes([
-        {
-            path: "/",
-            element: TestComponent,
-        },
-        {
-            path: "/test",
-            element: TestComponent2,
-        },
-    ]);
 
     return (
         <div class="section">
             <Navbar />
+            <Router>
+                <TestComponent path="/" />
+                <TestComponent2 path="/test" />
+            </Router>
         </div>
     );
 }

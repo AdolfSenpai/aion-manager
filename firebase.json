@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "http://localhost:5000/",
     "public": "dist",
     "ignore": [
       "firebase.json",
@@ -10,7 +9,7 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "index.html"
+        "destination": "/index.html"
       }
     ]
   }

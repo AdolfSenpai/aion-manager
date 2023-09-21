@@ -25,14 +25,14 @@ export default function Navbar() {
     return (
         <nav class="navbar is-fixed-top is-black" role="navigation">
             <div class="navbar-brand">
-                <a class="navbar-item" href="http://localhost:5000/">
+                <a class="navbar-item" href="/">
                     <img src={logo}/>
                 </a>
             </div>
             <div class="navbar-menu">
 
                 <div class="navbar-start">
-                    <a class="navbar-item">
+                    <a class="navbar-item" href="/">
                         Home
                     </a>
                 </div>
